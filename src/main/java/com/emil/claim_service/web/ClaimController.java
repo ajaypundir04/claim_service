@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/claims")
 @RequiredArgsConstructor
 @Validated
+@CrossOrigin(origins = "*")
 public class ClaimController {
 
     private final ClaimService claimService;
