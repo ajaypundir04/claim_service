@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: claim-postgres
+    restart: always
+    environment:
+      POSTGRES_DB: claimdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - claim-network
+
+  claim-service:
+    build: .
+    container_name: claim-service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/claimdb
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+
+    networks:
+      - claim-network
+
+volumes:
+  postgres_data:
+
+networks:
+  claim-network:
