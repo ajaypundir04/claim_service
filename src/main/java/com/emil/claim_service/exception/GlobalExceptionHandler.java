@@ -32,4 +32,13 @@ public class GlobalExceptionHandler {
         return new ResponseStatusException(HttpStatus.BAD_REQUEST,
                 "Server unable to process the request");
     }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseStatusException ResourceNotFoundException(ResourceNotFoundException ex) {
+
+        log.error("Unable to process request due to {} ", ex.getMessage(), ex);
+
+        return new ResponseStatusException(HttpStatus.NOT_FOUND,
+                ex.getMessage());
+    }
 }

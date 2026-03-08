@@ -32,4 +32,9 @@ public class ClaimController {
 
         return claimService.updateStatus(claimNumber, request);
     }
+
+    @GetMapping("/{claimNumber}")
+    public ClaimResponse getClaim(@PathVariable String claimNumber) {
+        return claimService.getClaimByNumber(claimNumber);
+    }
 }
